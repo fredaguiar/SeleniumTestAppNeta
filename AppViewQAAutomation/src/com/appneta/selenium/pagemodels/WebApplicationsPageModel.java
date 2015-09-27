@@ -13,15 +13,16 @@ public class WebApplicationsPageModel extends PageModel {
 	private final String APPLICATION_OPTION = ".//option[text()='%s']";
 	private final String NAME = "apn-input-name";
 	private final String TARGET_URL = "apn-target-URL-checkbox";
-	private final String EMAIL = ".//input[@type='text']";
+	private final String EMAIL = ".//input[@class='ember-view ember-text-field input-medium']";
 	private final String PASSWORD = ".//input[@type='password']";
 	private final String SAVE = "apn-button-save";
+	private final String APPLICATION_NAME = ".//h4[text()='%s']";
 	
 	// application types
 	public static final String APPLICATION_OPTION_GOOGLE_APPS = "Google Apps";
 
 	@Override
-	public void loadPage() {
+	public void loadPage() throws Exception {
 		clickAppViewMenu();
 		clickWebApplicationMenu();
 		clickRemindMe();
@@ -58,12 +59,12 @@ public class WebApplicationsPageModel extends PageModel {
 	}
 	
 	public void fillInEmail(String email) {
-		PageElement elem = new PageElement(By.cssSelector(EMAIL));
+		PageElement elem = new PageElement(By.xpath(EMAIL));
 		elem.fillInText(email);
 	}
 	
 	public void fillInPassword(String password) {
-		PageElement elem = new PageElement(By.cssSelector(PASSWORD));
+		PageElement elem = new PageElement(By.xpath(PASSWORD));
 		elem.fillInText(password);
 	}
 	
@@ -86,6 +87,13 @@ public class WebApplicationsPageModel extends PageModel {
 		
 		clickSave();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(FOOTER_LOGO)));
+	}
+	
+	public boolean verifyAppNameExists (String appName) {
+		
+		String appName2 = String.format(APPLICATION_NAME, appName);
+		PageElement elem = new PageElement(By.xpath(appName2));
+		return elem.verifyElementExists();
 	}
 
 }

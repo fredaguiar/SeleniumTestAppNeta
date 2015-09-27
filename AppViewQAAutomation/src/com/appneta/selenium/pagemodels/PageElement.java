@@ -61,5 +61,20 @@ public class PageElement {
 		inptTxt.clear();
 		inptTxt.sendKeys(textToFill);
 	}
+	
+	public boolean verifyElementExists() {
+		
+		WebElement elem;
+		try {
+			elem = driver.findElement(by);
+			if (elem == null){
+				return false;
+			}
+			return true;
+		}
+		catch(Exception ex) {
+			return false;
+		}
+	}
 
 }

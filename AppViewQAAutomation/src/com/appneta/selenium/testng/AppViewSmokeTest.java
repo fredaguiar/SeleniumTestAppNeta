@@ -1,5 +1,6 @@
 package com.appneta.selenium.testng;
 
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,6 +14,7 @@ public final class AppViewSmokeTest extends SeleniumTest {
 	private static String _appnetaLogin = "https://signon.pv-st.appneta.com/signon/login.html";
 	private String _appName;
 	private String _userAction;
+	private String _dashboardName;
 
 	@DataProvider
 	public Object[][] authenticationData() {
@@ -26,11 +28,18 @@ public final class AppViewSmokeTest extends SeleniumTest {
 	public Object[][] webAppData() {
 		return new Object[][] { new Object[]{ 
 				WebApplicationsPageModel.APPLICATION_OPTION_GOOGLE_APPS,
-				"Google Apps",
+				"Google Apps - ",
 				"appUsername",
 				"appPassword",
 				"appEmail",
 				"appEmailPassword",
+				}};
+	}
+	
+	@DataProvider
+	public Object[][] webDashboardData() {
+		return new Object[][] { new Object[]{ 
+				"DBoard - "
 				}};
 	}
 	
@@ -61,14 +70,20 @@ public final class AppViewSmokeTest extends SeleniumTest {
 		WebApplicationsPageModel webAppPage = new WebApplicationsPageModel();
 		webAppPage.loadPage();
 		webAppPage.createWebApp(appOption, _appName, true, appEmail, appEmailPassword);
+		
+		Assert.assertNotNull(webAppPage.verifyAppNameExists(_appName), "Application name not found");
 	}
 	
-	@Test(dependsOnMethods="webAppTest")
-	public void webDashboardTest() throws Exception {
+	@Test(dataProvider = "webDashboardData", dependsOnMethods="webAppTest")
+	public void webDashboardTest(String dashboardName) throws Exception {
 
+		_dashboardName = appendRandomID(dashboardName);
+		
 		WebDashboardPageModel webDashboardPage = new WebDashboardPageModel();
 		webDashboardPage.loadPage();
-		webDashboardPage.createDashboard(_appName, _userAction);
+		webDashboardPage.createDashboard(_dashboardName, _appName, _userAction);
+		
+		Assert.assertNotNull(webDashboardPage.verifyDashboardNameExists(_appName), "Dashboard name not found");
 	}
 
 	@AfterClass(alwaysRun = true)
