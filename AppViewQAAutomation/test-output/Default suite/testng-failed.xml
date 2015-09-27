@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
+    <classes>
+      <class name="com.appneta.selenium.testng.AppViewSmokeTest">
+        <methods>
+          <include name="tearDown"/>
+          <include name="webAppTest" invocation-numbers="0"/>
+          <include name="beforeClass"/>
+          <include name="webDashboardTest"/>
+          <include name="afterClass"/>
+          <include name="authenticationTest"/>
+        </methods>
+      </class> <!-- com.appneta.selenium.testng.AppViewSmokeTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
