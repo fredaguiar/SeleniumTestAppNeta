@@ -1,0 +1,7 @@
+<suite name="AppViewTestSuite">
+	<test verbose="2" name="SmokeTest">
+		<classes>
+			<class name="com.appneta.selenium.testng.AppViewSmokeTest" />
+		</classes>
+	</test>
+</suite> <!-- Default suite -->
