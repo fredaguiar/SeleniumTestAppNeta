@@ -1,0 +1,40 @@
+<project name="AppViewQAAutomation" default="build" basedir=".">
+
+	<target name="clean">
+		<delete dir="dist"/>
+	</target>
+	
+	<target name="copyDrivers">
+		<mkdir dir="dist/selenium"/>
+	    <copy todir="dist/selenium">
+			<fileset dir="selenium">
+				<include name="chromedriver.exe" />
+			</fileset>
+    	</copy>
+	</target>
+	
+	<target name="copyLibs">
+		<mkdir dir="dist/lib"/>
+	    <copy todir="dist/lib">
+			<fileset dir="lib">
+				<include name="selenium-server-standalone-2.43.0.jar" />
+				<include name="testng-6.8.8.jar" />
+			</fileset>
+    	</copy>
+	</target>
+	
+    <target name="compile" depends="clean,copyDrivers,copyLibs">
+        <mkdir dir="dist/classes"/>
+        <javac srcdir="src" destdir="dist/classes" classpathref="classpath"/>
+    </target>
+	
+    <target name="build" depends="compile">
+        <jar destfile="dist/AppViewQAAutomation.jar" basedir="dist"/>
+    </target>
+	
+	<path id="classpath">
+	     <pathelement location="dist/lib/selenium-server-standalone-2.43.0.jar" />
+	     <pathelement location="dist/lib/testng-6.8.8.jar" />
+	</path>
+
+</project>
